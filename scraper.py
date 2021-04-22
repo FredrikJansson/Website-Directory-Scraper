@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 ###### Includes
 import requests
 import sys
@@ -25,7 +27,7 @@ class Scraper:
     def __find_links(self):
         REGEX = '(href="([^"]*)")'
         m = re.findall(REGEX, self.req.text)
-        m_sub = [n[1] for n in m if 'http' not in n[1] and len(n[1]) > 1]
+        m_sub = [n[1] for n in m if 'http' not in n[1] and len(n[1]) > 1 and n[1][0] == '/']
         m_link = [n[1] for n in m if 'http' in n[1] and len(n[1]) > 1]
         if len(m_sub) != 0:
             print('Subdirectories found:')
@@ -45,7 +47,10 @@ class Scraper:
             return
 
         # If save folder does not exist.
-        os.mkdir('saves')
+        try:
+            os.mkdir('saves')
+        except:
+            pass
 
         # Saving
         filename = 'saves' + os.path.sep + self.url[self.url.find('/') + 2:].replace('/', '_') + '.txt'
@@ -57,7 +62,7 @@ class Scraper:
                     f.write(f'\t{n}\n')
                 f.write('\n\n')
             else:
-                f.write('No subdirectories was found.\n')
+                f.write('No subdirectories was found.\n\n')
             if len(m_link) != 0:
                 f.write('Full links found:\n')
                 for n in m_link:
