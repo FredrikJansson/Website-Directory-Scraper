@@ -62,7 +62,7 @@ class Scraper:
             for n in m_link:
                 print(f'\t{n}')
         else:
-            print('Did not find any full links.')
+            print('Did not find any full links.\n')
 
         # If the result should not be saved, just return here.
         if not self.should_save:
@@ -95,7 +95,7 @@ class Scraper:
                     f.write(f'\t{n}\n')
                 f.write('\n\n')
             else:
-                f.write('No full links was found.\n')
+                f.write('No full links was found.\n\n')
 
 
 # If program is run with arg 'help', print usage.
